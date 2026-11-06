@@ -1,0 +1,35 @@
+name: Test and deploy Mesto build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mesto-pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: |
+          test -n "$VITE_MESTO_TOKEN"
+          npm run build
+        env:
+          VITE_MESTO_GROUP: apf-cohort-203
+          VITE_MESTO_TOKEN: ${{ secrets.VITE_MESTO_TOKEN }}
+      - name: Publish only dist to the public repository
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PUBLIC_PAGES_TOKEN }}
+          external_repository: ${{ secrets.PUBLIC_PAGES_REPO }}
+          publish_dir: ./dist
+          publish_branch: ${{ secrets.PUBLIC_PAGES_BRANCH || 'main' }}
+          enable_jekyll: false

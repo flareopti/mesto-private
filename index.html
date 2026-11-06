@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mesto — фотографии путешествий</title>
+    <meta name="description" content="Mesto: делитесь фотографиями, сохраняйте любимые места и смотрите статистику карточек." />
+    <link rel="stylesheet" href="./src/pages/index.css" />
+  </head>
+  <body class="page">
+    <div class="page__content">
+      <header class="header page__section">
+        <img
+          src="./src/images/logo.svg"
+          alt="Логотип проекта место"
+          class="logo header__logo"
+        />
+      </header>
+      <main class="content">
+        <section class="profile page__section">
+          <button class="profile__image" type="button" aria-label="Обновить аватар" disabled></button>
+          <div class="profile__info">
+            <h1 class="profile__title"></h1>
+            <button class="profile__edit-button" type="button" aria-label="Редактировать профиль" disabled></button>
+            <p class="profile__description"></p>
+          </div>
+          <button class="profile__add-button" type="button" aria-label="Добавить место" disabled></button>
+        </section>
+        <section class="places page__section" aria-label="Фотографии мест">
+          <p class="page__status" role="status">Загрузка профиля и карточек…</p>
+          <button class="page__retry" type="button" hidden>Повторить загрузку</button>
+          <ul class="places__list"></ul>
+        </section>
+      </main>
+      <footer class="footer page__section">
+        <p class="footer__copyright">© 2026 Mesto Russia</p>
+      </footer>
+
+      <div class="popup popup_type_edit">
+        <div class="popup__content">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <h3 class="popup__title">Редактировать профиль</h3>
+          <form class="popup__form" novalidate name="edit-profile">
+            <label class="popup__label">
+              <input
+                type="text"
+                name="user-name"
+                id="user-name" required minlength="2" maxlength="40" pattern="[a-zA-Zа-яА-ЯёЁ\- ]+" data-error-message="Разрешены только латинские и русские буквы, дефис и пробел." aria-label="Имя" aria-describedby="user-name-error"
+                class="popup__input popup__input_type_name"
+                placeholder="Имя"
+              />
+              <span class="popup__error" id="user-name-error" aria-live="polite"></span>
+            </label>
+            <label class="popup__label">
+              <input
+                type="text"
+                name="user-description"
+                id="user-description" required minlength="2" maxlength="200" aria-label="Занятие" aria-describedby="user-description-error"
+                class="popup__input popup__input_type_description"
+                placeholder="Занятие"
+              />
+              <span class="popup__error" id="user-description-error" aria-live="polite"></span>
+            </label>
+            <button
+              type="submit"
+              class="button popup__button popup__button_disabled" disabled
+            >
+              Сохранить
+            </button>
+            <p class="popup__request-error" role="alert"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_new-card">
+        <div class="popup__content">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <h3 class="popup__title">Новое место</h3>
+          <form class="popup__form" novalidate name="new-place">
+            <label class="popup__label">
+              <input
+                type="text"
+                name="place-name"
+                id="place-name" required minlength="2" maxlength="30" pattern="[a-zA-Zа-яА-ЯёЁ\- ]+" data-error-message="Разрешены только латинские и русские буквы, дефис и пробел." aria-label="Название места" aria-describedby="place-name-error"
+                class="popup__input popup__input_type_card-name"
+                placeholder="Название"
+              />
+              <span class="popup__error" id="place-name-error" aria-live="polite"></span>
+            </label>
+            <label class="popup__label">
+              <input
+                type="url"
+                name="place-link"
+                id="place-link" required aria-label="Ссылка на картинку" aria-describedby="place-link-error"
+                class="popup__input popup__input_type_url"
+                placeholder="Ссылка на картинку"
+              />
+              <span class="popup__error" id="place-link-error" aria-live="polite"></span>
+            </label>
+            <button
+              type="submit"
+              class="button popup__button popup__button_disabled" disabled
+            >
+              Создать
+            </button>
+            <p class="popup__request-error" role="alert"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_image">
+        <div class="popup__content popup__content_content_image">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <img alt="" class="popup__image" />
+          <p class="popup__caption"></p>
+        </div>
+      </div>
+
+      <div class="popup popup_type_remove-card">
+        <div class="popup__content">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <h3 class="popup__title">Вы уверены?</h3>
+          <form class="popup__form" novalidate name="remove-card">
+            <button
+              type="submit"
+              class="button popup__button"
+            >
+              Да
+            </button>
+            <p class="popup__request-error" role="alert"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_edit-avatar">
+        <div class="popup__content">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form" novalidate name="edit-avatar">
+            <label class="popup__label">
+              <input
+                type="url"
+                name="user-avatar"
+                id="user-avatar" required aria-label="Ссылка на аватар" aria-describedby="user-avatar-error"
+                class="popup__input popup__input_type_avatar"
+                placeholder="Ссылка на изображение"
+              />
+              <span class="popup__error" id="user-avatar-error" aria-live="polite"></span>
+            </label>
+            <button
+              type="submit"
+              class="button popup__button popup__button_disabled" disabled
+            >
+              Сохранить
+            </button>
+            <p class="popup__request-error" role="alert"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_info">
+        <div class="popup__content popup__content_content_info">
+          <button type="button" class="popup__close" aria-label="Закрыть окно"></button>
+          <h3 class="popup__title">Информация о карточке</h3>
+          <dl class="popup__info"></dl>
+
+          <h4 class="popup__text"></h4>
+          <ul class="popup__list"></ul>
+        </div>
+      </div>
+      <p class="page__notification" role="alert" hidden></p>
+    </div>
+
+    <script src="./src/scripts/index.js" defer type="module"></script>
+
+    <template id="card-template">
+      <li class="places__item card">
+        <img class="card__image" alt="" loading="lazy" tabindex="0" role="button" />
+        <div class="card__control">
+          <button type="button" class="card__control-button card__control-button_type_info" aria-label="Информация о карточке"></button>
+          <button type="button" class="card__control-button card__control-button_type_delete" aria-label="Удалить карточку"></button>
+        </div>
+        <div class="card__description">
+          <h2 class="card__title"></h2>
+          <div class="card__likes">
+            <button type="button" class="card__like-button" aria-label="Поставить лайк" aria-pressed="false"></button>
+            <p class="card__like-count"></p>
+          </div>
+        </div>
+      </li>
+    </template>
+
+    <template id="popup-info-definition-template">
+      <div class="popup__info-item">
+        <dt class="popup__info-term"></dt>
+        <dd class="popup__info-description"></dd>
+      </div>
+    </template>
+
+    <template id="popup-info-user-preview-template">
+      <li class="popup__list-item popup__list-item_type_badge"></li>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+/* Accessibility and request states augment the original Practicum layout. */
+.page_modal-open { overflow: hidden; }
+[hidden] { display: none !important; }
+button:focus-visible, [role="button"]:focus-visible, input:focus-visible {
+  outline: 3px solid #69a9ff;
+  outline-offset: 4px;
+}
+.profile__image {
+  border: 0;
+  padding: 0;
+  position: relative;
+  flex-shrink: 0;
+}
+.profile__image { overflow: hidden; }
+.profile__image:focus-visible::before { background: rgb(0 0 0 / 65%); }
+.profile__image:focus-visible::after { opacity: 1; }
+button:disabled { cursor: default; }
+.card__image { background: #333; cursor: pointer; }
+.card__image_unavailable { color: #fff; }
+.card__like-button:disabled, .card__control-button:disabled { opacity: .45; }
+.page__status { color: #aaa; font: 16px/1.5 'Inter', Arial, sans-serif; }
+.page__retry { padding: 12px 18px; background: transparent; border: 1px solid #fff; color: #fff; cursor: pointer; }
+.page__notification {
+  position: fixed; z-index: 20; bottom: 24px; left: 50%; transform: translateX(-50%);
+  max-width: min(460px, calc(100% - 32px)); margin: 0; padding: 16px;
+  background: #fff; color: #b22; font: 14px/1.5 'Inter', Arial, sans-serif;
+  border-radius: 8px; box-shadow: 0 4px 24px #0005;
+}
+.popup__content { max-height: calc(100dvh - 100px); }
+.popup { overflow-y: auto; padding-block: 50px; box-sizing: border-box; }
+.popup__content_content_info { max-height: none; }
+.popup__list { max-height: 180px; overflow-y: auto; }
+.popup__request-error { margin: 12px 0 0; font-size: 13px; line-height: 1.4; color: #d00000; }
+.popup__request-error:empty { display: none; }
+.popup__info-description { overflow-wrap: anywhere; }
+.popup__list-item_type_badge { padding: 4px 8px; overflow-wrap: anywhere; }
+@media (prefers-reduced-motion: reduce) { .popup { transition: none; } }
